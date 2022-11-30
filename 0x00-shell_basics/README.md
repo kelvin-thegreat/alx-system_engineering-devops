@@ -3,3 +3,4 @@ Task 1. Display the contents list of your current directory
 Task 2. Change the working directory to the users home directory
 Task 3. Display current directory contents in a long format
 Task 4. Display currentdirectory contents,including hidden files
+Task 5. Display current directory contents, long format, user,group
