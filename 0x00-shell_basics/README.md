@@ -13,4 +13,9 @@ Task 11. Listing all files
 Task 12. Print the type of the file named
 Task 13. Create a symbolic Link
 Task 14.Copy all the HTML Files From the current working Directory
+Task 15. Move all files beginning with uppercase letter to the dr
+Task 16. Delete all files in the Current working dr that ends with ~
+Task 17. create Directories
+Task 18. List all  files and Dir of the current directory separated
+Task 19. Creating a magic file to detect files.
 
