@@ -14,3 +14,5 @@ Task 6. A script that displays the thiird  line of the file iacta
 
 Task 7. Shell script that creates a file named exactly \*\\'"Best School"\'\\*$\?\*\*\*\*\*\*;
 
+Task 8. A Script that writes into the file ls_cwd_content the result of ls -la
+
