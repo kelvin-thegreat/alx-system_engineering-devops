@@ -12,5 +12,10 @@ Task 10. Back to the future
 Task 11. Lists
 Task 12. File type
 Task 13. We are symbols, and inhabit symbols
-Task 14. Copy HTML files
+Task 14. Copy Html
+Task 15. Let's move
+Task 16. Clean Emacs
+Task 17. Tree
+Task 18. Life is a Series of Commas, not periods
+Task 19. File type:School
 
