@@ -26,3 +26,7 @@ Task 12. Create a script that prints all possible combinations of two letters, e
 Task 13.  script that prints a number with two decimal places, followed by a new line. e number will be stored in the environment variable NUM
 
 >>>>>>> 7ed54a53c0f8686345373d397d4a3da933d3922b
+Task 14. cript that converts a number from base 10 to base 16. The number in base 10 is stored in the environment variable DECIMAL, The script should display the number in base 16, followed by a new line
+Task 15. Write a script that encodes and decodes text using the rot13 encryption. Assume ASCII.
+Task 16.  a script that prints every other line from the input, starting with the first line.
+Task 17. shell script that adds the two numbers stored in the environment variables WATER and STIR and prints the result.
