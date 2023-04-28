@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # Set the IFS variable to the colon character to split the fields in /etc/passwd
 
 IFS=":"
