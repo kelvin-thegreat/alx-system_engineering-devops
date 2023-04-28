@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Display a header for the output
+printf "%-10s %-10s %-10s %-30s\n" "USER" "PID" "PPID" "COMMAND"
+
+# Use the ps command to display the list of processes
+ps axo user,pid,ppid,cmd --forest | tail -n +2 | while read user pid ppid cmd; do
+  # Format the output for each process
+  printf "%-10s %-10s %-10s %-30s\n" "$user" "$pid" "$ppid" "$cmd"
+done
