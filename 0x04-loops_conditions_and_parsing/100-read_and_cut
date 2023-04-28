@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # Only displays the username, user id, and user home directory path.
 
 myfile="/etc/passwd"
