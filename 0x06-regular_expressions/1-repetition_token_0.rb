@@ -4,6 +4,9 @@
 str = ARGV[0]
 
 # Use a regular expression to match "hbn", "hbtn", "hbttn", "hbtttn", "hbttttn", "hbtttttn", or "hbttttttn"
-if str =~ /hb[t]{0,6}n/
-  puts "#{str}"
+matches = str.scan(/hb[t]{0,6}n/)
+
+# Print all matches found
+matches.each do |match|
+  puts match
 end
