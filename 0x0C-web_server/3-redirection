@@ -1,13 +1,17 @@
 #!/bin/env bash
-# Bash script with commands to automatically configure a Ubuntu machine
 
-sudo apt update
+# Update system packages
+apt-get update
 
-sudo apt install -y nginx
+# Install Nginx
+apt-get install -y nginx
 
+# Create index.html with "Hello World!" content
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
-sudo sed -i 's/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/www.kelvinthegreat.com permanent;/' /etc/nginx/sites-enabled/default
+# Configure the redirection
+sed -i 's/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/www.merriam-webster.com permanent;/' /etc/nginx/sites-enabled/default
 
-sudo service nginx restart
+# Restart Nginx
+service nginx restart
 
