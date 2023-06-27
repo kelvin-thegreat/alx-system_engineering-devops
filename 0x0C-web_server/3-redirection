@@ -1,5 +1,5 @@
 #!/bin/env bash
-# Bash script containing commands to automatically configure a Ubuntu machine
+# Bash script with commands to automatically configure a Ubuntu machine
 
 sudo apt update
 
