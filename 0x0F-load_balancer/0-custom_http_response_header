@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Configure Nginx to include a custom HTTP response header (on web-01 and web-02)
+# The custom header will be named X-Served-By and will contain the hostname of the Nginx server
+
+# Update package lists and install Nginx
+apt-get update
+apt-get -y install nginx
+
+# Configure the firewall to allow requests through port 80
+ufw allow 'Nginx HTTP'
+
+# Create the directory structure for Nginx
+mkdir -p /var/www/html
+
+# Adjust permissions to enable easy file creation in the directory
+chmod -R 755 /var/www
+
+# Create an index page
+echo 'Hello World!' | tee /var/www/html/index.html
+
+# Create a custom webpage for displaying a 404 error
+echo "Ceci n'est pas une page" | tee /var/www/html/404.html
+
+# Modify the Nginx configuration to add a custom header and redirect a specific page (/redirect_me)
+string_for_replacement="server_name _;\n\tadd_header X-Served-By \$hostname;\n\trewrite ^\/redirect_me https:\/\/www.blog.ehoneahobed.com permanent;"
+sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Modify the Nginx configuration to handle 404 errors and display the custom error page
+string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# Restart the Nginx service to apply the configuration changes
+service nginx restart
+
