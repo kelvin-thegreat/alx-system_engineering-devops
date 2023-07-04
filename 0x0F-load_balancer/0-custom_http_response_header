@@ -1,33 +1,30 @@
 #!/usr/bin/env bash
-# configuration of  web-02 to be similar  to web-01
-# The value of the custom HTTP header is the  hostname of the server Nginx is running on
-# custom HTTP header must be X-Served-By 
-sudo apt-get -y update
+# Configure Nginx - contains a custom header (on web-01 and web-02)
+# The custom HTTP header must be X-Served-By
+# custom HTTP header must be the hostname of the server Nginx is running on
+sudo apt-get update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-sudo mkdir -p /var/www/html /var/www/error
-sudo chmod -R 755 /var/www
-echo 'Hello World!' > /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
-server_config=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-	add_header X-Served-By \$hostname;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://youtube.com permanent;
-	}
-	error_page 404 /404.html;
-	location = /404.html {
-		internal;
-	}
-}"
 
-echo "$server_config" > /etc/nginx/sites-enabled/default
+# firewall for request through port:80
+sudo ufw allow 'Nginx HTTP'
+
+sudo mkdir -p /var/www/html
+
+# change permissions to easily create files in this directory
+sudo chmod -R 755 /var/www
+
+# the index page
+echo 'Hello World!' |sudo tee  /var/www/html/index.html
+
+# webpage for error 404
+echo "Ceci n'est pas une page" |sudo tee /var/www/html/404.html
+
+# redirect for a single page(/redirect_me) and add header to display hostname
+string_for_replacement="server_name _;\n\tadd_header X-Served-By \$hostname;\n\trewrite ^\/redirect_me https:\/\/www.merriam-webster.com permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# redirect for 404 error page
+string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+# restart the web server
 sudo service nginx restart
