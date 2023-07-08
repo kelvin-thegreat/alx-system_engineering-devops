@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 # Update system packages
-apt-get update
+sudo apt-get update
 
 # Install Nginx
-apt-get install -y nginx
+sudo apt-get install -y nginx
 
 # Create index.html with "Hello World!" content
 echo "Hello World!" | sudo tee /var/www/html/index.html
-
 # Configure the redirection
-sed -i 's/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/www.merriam-webster.com permanent;/' /etc/nginx/sites-enabled/default
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.merriam-webster.com permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
 # Restart Nginx
-service nginx restart
+sudo service nginx restart
 
