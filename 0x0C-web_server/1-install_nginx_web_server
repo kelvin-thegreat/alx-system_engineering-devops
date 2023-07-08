@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installing Engine X on Web Server
+# Installing Engine X on Web Server 1
 apt-get update
 apt-get -y install nginx
 ufw allow 'Nginx HTTP'

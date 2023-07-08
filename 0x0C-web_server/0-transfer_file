@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bash script that transfers a file from a client to a server with scp
+# Bash script that can transfers a file from a client to a server with scp
 
 if [[ $# -lt 3 ]]; then
     echo "Usage: $0 PATH_TO_FILE IP USERNAME [PATH_TO_SSH_KEY]"
