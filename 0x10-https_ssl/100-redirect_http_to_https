@@ -45,6 +45,11 @@ frontend kelvin-frontend-https
 	http-request redirect scheme https code 301 unless { ssl_fc }
 	default_backend kelvin-backend
 
+frontend http_frontend
+    	bind *:80
+    	mode http
+    	redirect scheme https if !{ ssl_fc }
+
 backend kelvin-backend
         balance roundrobin
         server 199717-web-01 54.236.54.87:80 check
