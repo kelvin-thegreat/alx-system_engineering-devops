@@ -1,0 +1,7 @@
+-- Assuming you have already created a MySQL user for replication on the primary server.
+-- Replace 'replication_user' and 'password' with your actual replication username and password.
+
+STOP SLAVE;
+CHANGE MASTER TO MASTER_HOST='web-01-IP Address', MASTER_USER='replica_user', MASTER_PASSWORD='1234pwd', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=0;
+START SLAVE;
+
