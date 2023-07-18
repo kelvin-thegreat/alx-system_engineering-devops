@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Stop the current running Nginx service
+sudo service nginx stop
+
+# Change the owner of Nginx log and cache directories to nginx user
+sudo mkdir -p /var/cache/nginx
+sudo chown -R nginx:nginx /var/log/nginx 
+
+# Modify Nginx configuration to listen on port 8080 and run as nginx user
+sudo sed -i 's/^\s*listen\s*80;/listen 8080;/' /etc/nginx/sites-enabled/default
+sudo sed -i 's/^\s*user\s*www-data;/user nginx;/' /etc/nginx/nginx.conf
+
+# Restart Nginx service
+sudo service nginx start
+
