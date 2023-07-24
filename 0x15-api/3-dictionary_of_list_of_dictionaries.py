@@ -2,6 +2,7 @@
 """
 API - https://jsonplaceholder.typicode.com
 gathers data from API and exports it to JSON file
+Implemented using recursion
 """
 import json
 import requests
