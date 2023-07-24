@@ -1,31 +1,39 @@
 #!/usr/bin/python3
 """
-REST API - Using https://jsonplaceholder.typicode.com
+Using https://jsonplaceholder.typicode.com
 returns info about employee TODO progress
+Implemented without recursion
 """
 import re
 import requests
 import sys
 
-
 API = "https://jsonplaceholder.typicode.com"
-"""REST API LINK"""
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if re.fullmatch(r'\d+', sys.argv[1]):
-            id = int(sys.argv[1])
-            user_res = requests.get('{}/users/{}'.format(API, id)).json()
-            todos_res = requests.get('{}/todos'.format(API)).json()
-            user_name = user_res.get('name')
-            todos = list(filter(lambda x: x.get('userId') == id, todos_res))
-            todos_done = list(filter(lambda x: x.get('completed'), todos))
-            print(
-                'Employee {} is done with tasks({}/{}):'.format(
-                    user_name,
-                    len(todos_done),
-                    len(todos)
-                )
-            )
-            for todo_done in todos_done:
-                print('\t {}'.format(todo_done.get('title')))
+    if len(sys.argv) == 2 and sys.argv[1].isdigit():
+        employee_id = int(sys.argv[1])
+
+        # Get employee information
+        employee_info_url = f"{API}/users/{employee_id}"
+        employee_info_response = requests.get(employee_info_url)
+        employee_info = employee_info_response.json()
+        employee_name = employee_info.get('name')
+
+        # Get TODO list for the employee
+        todos_url = f"{API}/todos?userId={employee_id}"
+        todos_response = requests.get(todos_url)
+        todos = todos_response.json()
+
+        # Filter completed tasks
+        completed_tasks = [todo for todo in todos if todo.get('completed')]
+        num_completed_tasks = len(completed_tasks)
+        total_tasks = len(todos)
+
+        # Display progress information
+        print(f'Employee {employee_name} is done with tasks ({num_completed_tasks}/{total_tasks}):')
+        for task in completed_tasks:
+            print(f'\t {task.get("title")}')
+    else:
+        print("Usage: python script_name.py <employee_id>")
+
