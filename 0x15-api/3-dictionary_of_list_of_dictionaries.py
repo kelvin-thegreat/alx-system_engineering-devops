@@ -1,14 +1,12 @@
 #!/usr/bin/python3
 """
-API - https://jsonplaceholder.typicode.com
+https://jsonplaceholder.typicode.com
 gathers data from API and exports it to JSON file
-Implemented using recursion
 """
 import json
 import requests
 
 API = "https://jsonplaceholder.typicode.com"
-"""REST API url"""
 
 
 def get_employee_todo_data(employee_id):
@@ -51,9 +49,8 @@ def export_all_employees_todo_to_json():
         all_employee_data[str(user_id)] = user_data
 
     with open("todo_all_employees.json", 'w') as json_file:
-        json.dump(all_employee_data, json_file)
+        json.dump(all_employee_data, json_file, indent=4)
 
 
 if __name__ == '__main__':
     export_all_employees_todo_to_json()
-
