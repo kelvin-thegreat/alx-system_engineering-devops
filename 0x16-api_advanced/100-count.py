@@ -1,57 +1,43 @@
 #!/usr/bin/python3
-""" Count_words function/Module"""
+"""Count_words module/function"""
 import requests
 
 
-def count_words(subreddit, word_list, after=None, word_count=None):
-    """
-    Recursively queries Reddit API, prints sorted keyword count.
+def count_words(subreddit, word_list, found_list=[], after=None):
+    '''Retrieves counts of given words found.
 
     Args:
-        subreddit (str): The name of the subreddit to retrieve articles from.
-        word_list (list): A list of keywords to count.
-        after (str): Identifier for the next page of results.
-        word_count (dict): Dictionary to store keyword counts.
+        subreddit (str): subreddit to search.
+        word_list (list): words to search for in post titles.
+        found_list (obj): value pairs of words.
+        after (str): The next page of the API results.
+    '''
+    user_agent = {'User-agent': 'test45'}
+    posts = requests.get('http://www.reddit.com/r/{}/hot.json?after={}'
+                         .format(subreddit, after), headers=user_agent)
+    if after is None:
+        word_list = [word.lower() for word in word_list]
 
-    Returns:
-        None
-    """
-    if word_count is None:
-        word_count = {}
-    
-    base_url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
-    headers = {
-        "User-Agent": "Reddit API Client v1.0.0 (by /u/firdaus_cartoon_jr)"
-    }
-    params = {
-        "limit": 100,
-        "after": after
-    }
-    
-    response = requests.get(base_url, headers=headers, params=params, allow_redirects=False)
-    
-    if response.status_code != 200:
-        return
-    
-    results = response.json().get("data")
-    after = results.get("after")
-    
-    for post in results.get("children"):
-        title = post.get("data").get("title").lower()
-        for word in word_list:
-            if f" {word.lower()} " in f" {title} ":
-                word_count[word] = word_count.get(word, 0) + 1
-
-    if after is not None:
-        return count_words(subreddit, word_list, after, word_count)
+    if posts.status_code == 200:
+        posts = posts.json()['data']
+        aft = posts['after']
+        posts = posts['children']
+        for post in posts:
+            title = post['data']['title'].lower()
+            for word in title.split(' '):
+                if word in word_list:
+                    found_list.append(word)
+        if aft is not None:
+            count_words(subreddit, word_list, found_list, aft)
+        else:
+            result = {}
+            for word in found_list:
+                if word.lower() in result.keys():
+                    result[word.lower()] += 1
+                else:
+                    result[word.lower()] = 1
+            for key, value in sorted(result.items(), key=lambda item: item[1],
+                                     reverse=True):
+                print('{}: {}'.format(key, value))
     else:
-        sorted_words = sorted(word_count.items(), key=lambda x: (-x[1], x[0]))
-        for word, count in sorted_words:
-            print(f"{word}: {count}")
-
-"""# Example usage"""
-if __name__ == "__main__":
-    subreddit_to_check = "programming"
-    keywords_to_count = ["python", "java", "javascript"]
-    count_words(subreddit_to_check, keywords_to_count)
-
+        return
