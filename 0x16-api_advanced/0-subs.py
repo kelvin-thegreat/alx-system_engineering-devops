@@ -1,31 +1,17 @@
 #!/usr/bin/python3
 """
-Contains the number_of_subscribers function
-
+function that queries the Reddit API
 """
+
 import requests
 
+
 def number_of_subscribers(subreddit):
-    if not isinstance(subreddit, str):
+    """Prints # of subscribers in a given subreddit"""
+    if subreddit is None or type(subreddit) is not str:
         return 0
-
-    url = f'http://www.reddit.com/r/{subreddit}/about.json'
-    headers = {'User-Agent': 'CustomUserAgent'}
-
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status() 
-        data = response.json()
-        subscribers = data.get('data', {}).get('subscribers', 0)
-        return subscribers
-    except (requests.RequestException, ValueError):
-        return 0
-
-"""# Test the function """
-subreddit_name = 'python'
-subscribers = number_of_subscribers(subreddit_name)
-if subscribers > 0:
-    print(f"The subreddit '{subreddit_name}' has {subscribers} subscribers.")
-else:
-    print(f"The subreddit '{subreddit_name}' is invalid or inaccessible.")
-
+    api_request = requests.get('http://www.reddit.com/r/{}/about.json'.format(subreddit),
+                     headers={'User-Agent': '0x16-api_advanced:project:\
+v1.0.0 (by /u/firdaus_cartoon_jr)'}).json()
+    subscriber = api_request.get("data", {}).get("subscribers", 0)
+    return subscriber
