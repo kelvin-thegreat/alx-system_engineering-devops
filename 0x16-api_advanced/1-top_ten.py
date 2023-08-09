@@ -3,13 +3,13 @@
 
 import requests
 
-def get_top_ten_posts(subreddit_name):
+def top_ten(subreddit_name):
     """
-    Fetches and prints the titles of the 10 hottest posts on a given subreddit.
+    Function that fetches and prints titles of top 10 hottest posts on a given subreddit.
     Args:
-        subreddit_name (str): The name of the subreddit to retrieve posts from.
+        subreddit_name (str): Subreddit to retrieve posts from.
     """
-    base_url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit_name)
+    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit_name)
     headers = {
         "User-Agent": "Reddit API Client v1.0.0 (by /u/firdaus_cartoon_jr)"
     }
@@ -17,13 +17,13 @@ def get_top_ten_posts(subreddit_name):
         "limit": 10
     }
 
-    response = requests.get(base_url, headers=headers, params=params, allow_redirects=False)
-    if response.status_code == 404:
-        print("Subreddit not found.")
+    res = requests.get(url, headers=headers, params=params, allow_redirects=False)
+    if res.status_code == 404:
+        print("None")
         return
     
-    posts_data = response.json().get("data")
-    for post in posts_data.get("children"):
-        post_title = post.get("data").get("title")
-        print(post_title)
+    posted_data = res.json().get("data")
+    for post in posted_data.get("children"):
+        posted_title = post.get("data").get("title")
+        print(posted_title)
 
