@@ -1,22 +1,22 @@
 #!/usr/bin/python3
-"""Count_words module/function"""
+"""  recursive function that queries the Reddit API """
 import requests
 
 
-def count_words(subreddit, word_list, found_list=[], after=None):
-    '''Retrieves counts of given words found.
+def count_words(subreddit, listed_words, list_found=[], after=None):
+    """Prints counts of words found.
 
     Args:
         subreddit (str): subreddit to search.
-        word_list (list): words to search for in post titles.
-        found_list (obj): value pairs of words.
+        listed_words (list): words to search for in post titles.
+        list_found (obj): value pairs of words.
         after (str): The next page of the API results.
-    '''
-    user_agent = {'User-agent': 'test45'}
+    """
+    agent = {'User-agent': 'test45'}
     posts = requests.get('http://www.reddit.com/r/{}/hot.json?after={}'
-                         .format(subreddit, after), headers=user_agent)
+                         .format(subreddit, after), headers=agent)
     if after is None:
-        word_list = [word.lower() for word in word_list]
+        listed_words = [word.lower() for word in listed_words]
 
     if posts.status_code == 200:
         posts = posts.json()['data']
@@ -25,13 +25,13 @@ def count_words(subreddit, word_list, found_list=[], after=None):
         for post in posts:
             title = post['data']['title'].lower()
             for word in title.split(' '):
-                if word in word_list:
-                    found_list.append(word)
+                if word in listed_words:
+                    list_found.append(word)
         if aft is not None:
-            count_words(subreddit, word_list, found_list, aft)
+            count_words(subreddit, listed_words, list_found, aft)
         else:
             result = {}
-            for word in found_list:
+            for word in list_found:
                 if word.lower() in result.keys():
                     result[word.lower()] += 1
                 else:
