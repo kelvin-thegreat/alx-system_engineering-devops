@@ -7,7 +7,15 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """Prints # of subscribers in a given subreddit"""
+    """
+    Get the number of subscribers in a given subreddit.
+
+    Args:
+        subreddit (str): The name of the subreddit.
+
+    Returns:
+        int: The number of subscribers in the subreddit, or 0 if invalid input or API request fails.
+    """
     if subreddit is None or type(subreddit) is not str:
         return 0
     api_request = requests.get('http://www.reddit.com/r/{}/about.json'.format(subreddit),
