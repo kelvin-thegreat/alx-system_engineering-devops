@@ -15,7 +15,7 @@ exec {'Hello':
   provider => shell,
 }
 
-exec {'sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/blog.ehoneahobed.com\/;\\n\\t}/" /etc/nginx/sites-available/default':
+exec {'sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/https://stackoverflow.com\/;\\n\\t}/" /etc/nginx/sites-available/default':
   provider => shell,
 }
 
