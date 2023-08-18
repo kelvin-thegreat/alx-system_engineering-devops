@@ -1,0 +1,16 @@
+[Unit]
+Description=Gunicorn instance to serve AirBnb web app
+After=network.target
+
+[Service]
+User=100.25.138.54
+WorkingDirectory=/home/ubuntu/AirBnB_clone_v4
+ExecStart=/home/ubuntu/flask/bin/gunicorn -w 3 -b 0.0.0.0:5003 web_dynamic.2-hbnb:app
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=gunicorn
+
+[Install]
+WantedBy=multi-user.target
+
