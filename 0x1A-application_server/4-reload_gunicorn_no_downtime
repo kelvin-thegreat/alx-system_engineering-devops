@@ -3,10 +3,4 @@
 # ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
 # 4-reload_gunicorn_no_downtime
 # Find the process IDs of Gunicorn
-GUNICORN_PIDS=$(ps auxf | grep '[g]unicorn' | awk '{ print $2 }')
-
-# Send the SIGHUP signal to the Gunicorn processes
-echo "Initiating graceful reload of Gunicorn..."
-kill -HUP $GUNICORN_PIDS
-
-echo "Graceful reload initiated for Gunicorn."
+sudo ps auxf | grep '[g]unicorn' | awk '{ print $2 }' | kill -HUP
